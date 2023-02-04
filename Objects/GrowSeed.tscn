@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Objects/GrowSeed.gd" type="Script" id=1]
+[ext_resource path="res://ArtAssets/brownmaterial.tres" type="Material" id=2]
+[ext_resource path="res://ArtAssets/3dModels/seed.tscn" type="PackedScene" id=3]
+
+[sub_resource type="SphereMesh" id=1]
+
+[sub_resource type="SphereShape" id=2]
+
+[node name="GrowSeed" type="Spatial"]
+pause_mode = 1
+script = ExtResource( 1 )
+
+[node name="GrowSeed" type="StaticBody" parent="."]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -1, 0 )
+visible = false
+
+[node name="MeshInstance" type="MeshInstance" parent="GrowSeed"]
+mesh = SubResource( 1 )
+material/0 = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="GrowSeed"]
+shape = SubResource( 2 )
+
+[node name="Spatial" type="Spatial" parent="."]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0 )
+
+[node name="seed" parent="Spatial" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 31.1619, -1.54874, 2.65343 )

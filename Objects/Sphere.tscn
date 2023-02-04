@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Objects/Sphere.gd" type="Script" id=1]
+[ext_resource path="res://ArtAssets/brownmaterial.tres" type="Material" id=2]
+[ext_resource path="res://ArtAssets/3dModels/Brock_bullet.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ArtAssets/3dModels/Pitch_bullet.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ArtAssets/3dModels/Celly_bullet.tscn" type="PackedScene" id=5]
+
+[sub_resource type="SphereMesh" id=1]
+
+[sub_resource type="SphereShape" id=2]
+
+[node name="Sphere" type="Spatial"]
+pause_mode = 1
+script = ExtResource( 1 )
+
+[node name="Sphere" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+visible = false
+
+[node name="MeshInstance" type="MeshInstance" parent="Sphere"]
+mesh = SubResource( 1 )
+material/0 = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Sphere"]
+shape = SubResource( 2 )
+
+[node name="Brock_bullet" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.1654, 6.4485, 6.4312 )
+visible = false
+
+[node name="Celly_bullet" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5896, 0.616545, 13.2663 )
+visible = false
+
+[node name="Pitch_bullet" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.15737, 4.71236, -5.25527 )
+visible = false

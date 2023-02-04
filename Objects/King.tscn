@@ -1,0 +1,175 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Objects/King.gd" type="Script" id=1]
+[ext_resource path="res://ArtAssets/redmaterial.tres" type="Material" id=2]
+[ext_resource path="res://ArtAssets/bluematerial.tres" type="Material" id=3]
+[ext_resource path="res://ArtAssets/3dModels/Brock.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ArtAssets/3dModels/Celly.tscn" type="PackedScene" id=5]
+[ext_resource path="res://ArtAssets/3dModels/Pitch.tscn" type="PackedScene" id=6]
+[ext_resource path="res://ArtAssets/3dModels/Cat.tscn" type="PackedScene" id=7]
+
+[sub_resource type="BoxShape" id=2]
+
+[sub_resource type="CubeMesh" id=3]
+size = Vector3( 1, 1, 1 )
+
+[sub_resource type="CubeMesh" id=8]
+size = Vector3( 4, 8, 4 )
+
+[sub_resource type="CubeMesh" id=1]
+size = Vector3( 10, 0.25, 0.25 )
+
+[sub_resource type="CylinderMesh" id=4]
+radial_segments = 32
+rings = 0
+
+[sub_resource type="SpatialMaterial" id=5]
+flags_transparent = true
+albedo_color = Color( 1, 1, 1, 0.286275 )
+
+[sub_resource type="SphereMesh" id=6]
+height = 1.0
+
+[sub_resource type="SphereMesh" id=7]
+height = 0.2
+
+[node name="King" type="Spatial"]
+pause_mode = 1
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+script = ExtResource( 1 )
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 0, 0, 2, 0 )
+visible = false
+billboard = 1
+text = "WIZARD"
+
+[node name="KingBody" type="StaticBody" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="KingBody"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -1, 0 )
+shape = SubResource( 2 )
+
+[node name="ModelRotator" type="Spatial" parent="KingBody"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.244997, 0 )
+
+[node name="Brock" parent="KingBody/ModelRotator" instance=ExtResource( 4 )]
+transform = Transform( -2.62268e-09, 0, 0.06, 0, 0.06, 0, -0.06, 0, -2.62268e-09, 0, -1.46308, 0.074 )
+
+[node name="Celly" parent="KingBody/ModelRotator" instance=ExtResource( 5 )]
+transform = Transform( 0.000330915, 0, 0.059999, 0, 0.06, 0, -0.059999, 0, 0.000330915, 0.473738, -1.18417, 2.73232 )
+
+[node name="Pitch" parent="KingBody/ModelRotator" instance=ExtResource( 6 )]
+transform = Transform( 0.000330915, 0, 0.059999, 0, 0.06, 0, -0.059999, 0, 0.000330915, 0.386694, -1.21447, -3.24352 )
+
+[node name="Cat" parent="KingBody/ModelRotator" instance=ExtResource( 7 )]
+transform = Transform( 0.000330916, 0, 0.059999, 0, 0.06, 0, -0.059999, 0, 0.000330916, 0.458238, -1.6, 4.93949 )
+
+[node name="RedMesh" type="MeshInstance" parent="KingBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.37363, 0 )
+visible = false
+mesh = SubResource( 3 )
+material/0 = ExtResource( 2 )
+
+[node name="BlueMesh" type="MeshInstance" parent="KingBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.39797, 0 )
+visible = false
+mesh = SubResource( 8 )
+material/0 = ExtResource( 3 )
+
+[node name="Spinner" type="Spatial" parent="KingBody"]
+transform = Transform( 0.5, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+visible = false
+
+[node name="RayCast" type="RayCast" parent="KingBody/Spinner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+enabled = true
+cast_to = Vector3( 10, 0, 0 )
+
+[node name="ThrowRayCast" type="RayCast" parent="KingBody/Spinner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+enabled = true
+cast_to = Vector3( 300, 0, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="KingBody/Spinner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -1, 0 )
+visible = false
+mesh = SubResource( 1 )
+material/0 = ExtResource( 2 )
+
+[node name="Sitedisk" type="MeshInstance" parent="KingBody"]
+transform = Transform( 2, 0, 0, 0, 0.01, 0, 0, 0, 2, 0, -1.45, 0 )
+visible = false
+mesh = SubResource( 4 )
+material/0 = SubResource( 5 )
+
+[node name="Slingshot" type="Spatial" parent="KingBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+visible = false
+
+[node name="MeshInstance" type="MeshInstance" parent="KingBody/Slingshot"]
+transform = Transform( 0.1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0 )
+visible = false
+mesh = SubResource( 1 )
+material/0 = ExtResource( 2 )
+
+[node name="Spatial" type="Spatial" parent="KingBody/Slingshot"]
+transform = Transform( 0.018, 0, 0, 0, 0.018, 0, 0, 0, 0.018, 0, 0.00297058, 0 )
+
+[node name="Spatial" type="Spatial" parent="KingBody/Slingshot/Spatial"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 0, 32.7148, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="KingBody/Slingshot/Spatial/Spatial"]
+mesh = SubResource( 6 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance1" type="MeshInstance" parent="KingBody/Slingshot/Spatial/Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 30, 0 )
+mesh = SubResource( 6 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2" type="MeshInstance" parent="KingBody/Slingshot/Spatial/Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 50, 0 )
+mesh = SubResource( 6 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3" type="MeshInstance" parent="KingBody/Slingshot/Spatial/Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 60, 0 )
+mesh = SubResource( 6 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance4" type="MeshInstance" parent="KingBody/Slingshot/Spatial/Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 60, 0 )
+mesh = SubResource( 6 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance5" type="MeshInstance" parent="KingBody/Slingshot/Spatial/Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 50, 0 )
+mesh = SubResource( 6 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance6" type="MeshInstance" parent="KingBody/Slingshot/Spatial/Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 30, 0 )
+mesh = SubResource( 6 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance7" type="MeshInstance" parent="KingBody/Slingshot/Spatial/Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 0, 0 )
+mesh = SubResource( 6 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance8" type="MeshInstance" parent="KingBody/Slingshot/Spatial/Spatial"]
+transform = Transform( 16, 0, 0, 0, 8, 0, 0, 0, 16, 81.3544, -29.8853, 0 )
+visible = false
+mesh = SubResource( 7 )
+skeleton = NodePath("../..")
+
+[node name="HP" type="Label3D" parent="."]
+transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0.5, 0 )
+visible = false
+billboard = 1
+text = "HP: "
+
+[connection signal="input_event" from="KingBody" to="." method="_on_KingBody_input_event"]
+[connection signal="mouse_entered" from="KingBody" to="." method="_on_KingBody_mouse_entered"]
+[connection signal="mouse_exited" from="KingBody" to="." method="_on_KingBody_mouse_exited"]
